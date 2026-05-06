@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nickel Chrome Plating Simulator</title>
+  <title>Copper Nickel Chromium Plating Simulator</title>
   <style>
     :root {
       --font-main: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
@@ -268,7 +268,7 @@
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(7, minmax(150px, 1fr));
+      grid-template-columns: repeat(8, minmax(150px, 1fr));
       gap: 15px;
     }
 
@@ -1019,8 +1019,8 @@
   <header>
     <div class="hero">
       <div class="hero-title">
-        <h1>Nickel Chrome Plating Simulator</h1>
-        <p>Simulasi waktu proses, Kebutuhan tank tambahan, Output Rack Hanger, serta visual Rack Flow untuk memahami pengaruh parallel tank terhadap target cycle time.</p>
+        <h1>Copper Nickel Chromium Plating Simulator</h1>
+        <p>Simulasi Process Ni/Cr Line 2, kebutuhan tank tambahan, output Rack Hanger, serta visual rack flow untuk memahami pengaruh parallel tank terhadap target cycle time.</p>
       </div>
       <div class="hero-badge">
         <div class="label">System by</div>
@@ -1061,7 +1061,7 @@
             <option value="180">Cepat</option>
             <option value="90">Sangat Cepat</option>
           </select>
-          <div class="input-note">Nilai lebih kecil = Simulasi lebih cepat</div>
+          <div class="input-note">Nilai lebih kecil = simulasi lebih cepat</div>
         </div>
         <div class="actions">
           <button onclick="calculateAll()">Hitung</button>
@@ -1076,10 +1076,11 @@
     <section class="cards">
       <div class="metric"><div class="title">Total waktu dipping</div><div class="value" id="totalDipping">-</div><div class="note">Akumulasi seluruh waktu proses tank dasar</div></div>
       <div class="metric"><div class="title">Total waktu transfer</div><div class="value" id="totalTransfer">-</div><div class="note">Mengikuti total tank aktual</div></div>
-      <div class="metric"><div class="title">Lead Time 1 Rack</div><div class="value" id="leadTime">-</div><div class="note">Dipping + transfer</div></div>
+      <div class="metric"><div class="title">Lead time 1 Rack</div><div class="value" id="leadTime">-</div><div class="note">Dipping + transfer</div></div>
       <div class="metric"><div class="title">Rack Hanger / jam</div><div class="value" id="rackPerHour">-</div><div class="note">Berdasarkan target cycle time</div></div>
       <div class="metric"><div class="title">Produk / jam</div><div class="value" id="productPerHour">-</div><div class="note">Rack Hanger/jam × produk/rack</div></div>
-      <div class="metric"><div class="title">Total Tank aktual</div><div class="value" id="totalTankFlow">-</div><div class="note">Setelah rekomendasi tank tambahan</div></div>
+      <div class="metric"><div class="title">Produk / bulan</div><div class="value" id="productPerMonth">-</div><div class="note">Produk/jam × 21 jam × 22 hari</div></div>
+      <div class="metric"><div class="title">Total tank aktual</div><div class="value" id="totalTankFlow">-</div><div class="note">Setelah rekomendasi tank tambahan</div></div>
       <div class="metric"><div class="title">Target tercapai?</div><div class="value" id="targetStatus">-</div><div class="note">Dari bottleneck setelah paralel tank</div></div>
     </section>
 
@@ -1088,7 +1089,7 @@
         <div>
           <div class="section-eyebrow">Rekomendasi</div>
           <h2>Rekomendasi Tank Tambahan</h2>
-          <p>Tank yang boleh ditambah hanya Semibright Nickel, High Sulfur Nickel, Bright Nickel, dan Micro Porous Nickel. Rumus: jumlah tank minimum = ceil(waktu proses / target cycle time).</p>
+          <p>Tank yang boleh ditambah hanya Semibright Ni, High Sulfur Ni, Bright Ni, dan Micro porous Ni. Rumus: jumlah tank minimum = ceil(waktu proses / target cycle time).</p>
         </div>
       </div>
       <div class="table-wrap">
@@ -1169,37 +1170,37 @@
   <script>
     const baseStages = [
       { originalTank: 1, process: "Loading", chemical: "", timeMin: 0, temp: "", robot: 1 },
-      { originalTank: 2, process: "Soak clean", chemical: "EPINION SERIES", timeMin: 20, temp: "50 C", robot: 1 },
-      { originalTank: 3, process: "Electro degreasing", chemical: "EPINION SERIES", timeMin: 5, temp: "50 C", robot: 1 },
-      { originalTank: 4, process: "Water rinse", chemical: "Tap water", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 5, process: "Water rinse", chemical: "Tap water", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 6, process: "Acid pickling", chemical: "HCl", timeMin: 20, temp: "RT", robot: 1 },
-      { originalTank: 7, process: "Water rinse", chemical: "Tap water", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 8, process: "Water rinse", chemical: "Tap water", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 9, process: "Electro clean", chemical: "EPINION SERIES", timeMin: 10, temp: "40 C", robot: 1 },
-      { originalTank: 10, process: "Water rinse", chemical: "Tap water", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 11, process: "Water rinse", chemical: "Tap water", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 12, process: "Activation", chemical: "epiclen P12 (Dry Salt)", timeMin: 1, temp: "RT", robot: 1 },
-      { originalTank: 13, process: "Water rinse", chemical: "Tap water", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 14, process: "Semibright Nickel", chemical: "SFN-206", timeMin: 60, temp: "55 C", robot: "1 & 2", expandable: true },
-      { originalTank: 15, process: "High Sulfur Nickel", chemical: "HS 303", timeMin: 10, temp: "55 C", robot: 2, expandable: true },
-      { originalTank: 16, process: "Bright Nickel", chemical: "EPUNION Nitech/BNP", timeMin: 40, temp: "55 C", robot: 2, expandable: true },
-      { originalTank: 17, process: "Micro Porous Nickel", chemical: "Water", timeMin: 10, temp: "", robot: 2, expandable: true },
-      { originalTank: 18, process: "Water rinse", chemical: "Tap water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 19, process: "Water rinse", chemical: "Tap water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 20, process: "Water rinse", chemical: "Tap water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 21, process: "Water rinse", chemical: "Tap water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 22, process: "Water rinse", chemical: "RO Water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 23, process: "Water rinse", chemical: "RO Water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 24, process: "Passivation", chemical: "Cr6/Chrome free", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 25, process: "Water rinse", chemical: "", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 26, process: "Water rinse", chemical: "", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 27, process: "Water rinse", chemical: "", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 28, process: "Drying", chemical: "", timeMin: 5, temp: "", robot: 2 },
+      { originalTank: 2, process: "Soak clean", chemical: "epclen 541", timeMin: 10, temp: "", robot: 1 },
+      { originalTank: 3, process: "Electro clean", chemical: "epclen 541", timeMin: 5, temp: "", robot: 1 },
+      { originalTank: 4, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
+      { originalTank: 5, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
+      { originalTank: 6, process: "Acid electro sulfuric", chemical: "epclen VE-8 sulfuric", timeMin: 5, temp: "", robot: 1 },
+      { originalTank: 7, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
+      { originalTank: 8, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
+      { originalTank: 9, process: "Alkaline EC -", chemical: "epclen TL3 NaOH", timeMin: 5, temp: "", robot: 1 },
+      { originalTank: 10, process: "Alkaline EC +", chemical: "epclen TL3 NaOH", timeMin: 5, temp: "", robot: 1 },
+      { originalTank: 11, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
+      { originalTank: 12, process: "Ultra sonic rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
+      { originalTank: 13, process: "Activate", chemical: "Dry Salt P12", timeMin: 1, temp: "", robot: 1 },
+      { originalTank: 14, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: "1 & 2" },
+      { originalTank: 15, process: "Semibright Ni", chemical: "SFN 206 A / SFN 206 B / SFNSTEP / Y17", timeMin: 20, temp: "", robot: 2, expandable: true },
+      { originalTank: 16, process: "High Sulfur Ni", chemical: "HS 303 / Y17", timeMin: 3, temp: "", robot: 2, expandable: true },
+      { originalTank: 17, process: "Bright Ni", chemical: "BNP 415 A / BNP 415 B / Y17", timeMin: 20, temp: "", robot: 2, expandable: true },
+      { originalTank: 18, process: "Micro porous Ni", chemical: "MP 506 / MP pores / MP Dispersant / Y17", timeMin: 3, temp: "", robot: 2, expandable: true },
+      { originalTank: 19, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+      { originalTank: 20, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+      { originalTank: 21, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+      { originalTank: 22, process: "Chromium", chemical: "Ecoprom 800", timeMin: 5, temp: "", robot: 2 },
+      { originalTank: 23, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+      { originalTank: 24, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+      { originalTank: 25, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+      { originalTank: 26, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+      { originalTank: 27, process: "Ultra sonic rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+      { originalTank: 28, process: "Hot rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
       { originalTank: 29, process: "Unloading", chemical: "", timeMin: 0, temp: "", robot: 2 }
     ];
 
-    const expandableSet = new Set([14, 15, 16, 17]);
+    const expandableSet = new Set([15, 16, 17, 18]);
     let recommendationMap = new Map();
     let stageGroups = [];
     let flowRows = [];
@@ -1359,6 +1360,7 @@
       const leadTime = totalDipping + totalTransferMin;
       const rackPerHour = 60 / targetCycle;
       const productsPerHour = rackPerHour * productPerRack;
+      const productsPerMonth = productsPerHour * 21 * 22;
       const processCycles = baseStages.map(s => (s.timeMin / (recommendationMap.get(s.originalTank)?.requiredTank || 1))).filter(v => v > 0);
       const bottleneckCycle = Math.max(...processCycles);
       const targetOk = bottleneckCycle <= targetCycle;
@@ -1367,6 +1369,7 @@
       document.getElementById("leadTime").textContent = formatMinute(leadTime);
       document.getElementById("rackPerHour").textContent = `${rackPerHour.toFixed(2)} rack/jam`;
       document.getElementById("productPerHour").textContent = `${productsPerHour.toFixed(0)} produk/jam`;
+      document.getElementById("productPerMonth").textContent = `${productsPerMonth.toLocaleString("id-ID", { maximumFractionDigits: 0 })} produk/bulan`;
       document.getElementById("totalTankFlow").textContent = `${totalPhysicalTanks} tank`;
       document.getElementById("targetStatus").innerHTML = targetOk ? `<span class="tag green">Ya (${bottleneckCycle.toFixed(2)} menit)</span>` : `<span class="tag yellow">Belum (${bottleneckCycle.toFixed(2)} menit)</span>`;
       renderRecommendationTable();
