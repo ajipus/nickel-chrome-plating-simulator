@@ -1020,7 +1020,7 @@
     <div class="hero">
       <div class="hero-title">
         <h1>Nickel Chrome Plating Simulator</h1>
-        <p>Simulasi Process Ni/Cr Line 2, kebutuhan Tank Tambahan, output Rack Hanger, serta visual Rack Flow untuk memahami pengaruh parallel tank terhadap target Cycle Time.</p>
+        <p>Simulasi Process Ni/Cr, kebutuhan Tank Tambahan, Output Rack Hanger, serta visual Rack Flow untuk memahami pengaruh parallel tank terhadap target Cycle Time.</p>
       </div>
       <div class="hero-badge">
         <div class="label">System by</div>
@@ -1168,39 +1168,65 @@
   <footer>Copyright © <span id="copyrightYear"></span> Automation Team - PT. Garuda Metalindo, Tbk,</footer>
 
   <script>
-    const baseStages = [
-      { originalTank: 1, process: "Loading", chemical: "", timeMin: 0, temp: "", robot: 1 },
-      { originalTank: 2, process: "Soak clean", chemical: "epclen 541", timeMin: 10, temp: "", robot: 1 },
-      { originalTank: 3, process: "Electro clean", chemical: "epclen 541", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 4, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 5, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 6, process: "Acid electro sulfuric", chemical: "epclen VE-8 sulfuric", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 7, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 8, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 9, process: "Alkaline EC -", chemical: "epclen TL3 NaOH", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 10, process: "Alkaline EC +", chemical: "epclen TL3 NaOH", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 11, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 12, process: "Ultra sonic rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
-      { originalTank: 13, process: "Activate", chemical: "Dry Salt P12", timeMin: 1, temp: "", robot: 1 },
-      { originalTank: 14, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: "1 & 2" },
-      { originalTank: 15, process: "Semibright Ni", chemical: "SFN 206 A / SFN 206 B / SFNSTEP / Y17", timeMin: 20, temp: "", robot: 2, expandable: true },
-      { originalTank: 16, process: "High Sulfur Ni", chemical: "HS 303 / Y17", timeMin: 3, temp: "", robot: 2, expandable: true },
-      { originalTank: 17, process: "Bright Ni", chemical: "BNP 415 A / BNP 415 B / Y17", timeMin: 20, temp: "", robot: 2, expandable: true },
-      { originalTank: 18, process: "Micro porous Ni", chemical: "MP 506 / MP pores / MP Dispersant / Y17", timeMin: 3, temp: "", robot: 2, expandable: true },
-      { originalTank: 19, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 20, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 21, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 22, process: "Chromium", chemical: "Ecoprom 800", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 23, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 24, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 25, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 26, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 27, process: "Ultra sonic rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 28, process: "Hot rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
-      { originalTank: 29, process: "Unloading", chemical: "", timeMin: 0, temp: "", robot: 2 }
-    ];
+    const baseStages = [{ originalTank: 1, process: "Loading", chemical: "", timeMin: 0, temp: "", robot: 1 },
 
-    const expandableSet = new Set([15, 16, 17, 18]);
+  { originalTank: 2, process: "Soak clean", chemical: "epclen 541", timeMin: 10, temp: "", robot: 1 },
+
+  { originalTank: 3, process: "Electro clean", chemical: "epclen 541", timeMin: 5, temp: "", robot: 1 },
+
+  { originalTank: 4, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
+
+  { originalTank: 5, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
+
+  { originalTank: 6, process: "Acid electro sulfuric", chemical: "epclen VE-8 sulfuric", timeMin: 5, temp: "", robot: 1 },
+
+  { originalTank: 7, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
+
+  { originalTank: 8, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
+
+  { originalTank: 9, process: "Alkaline EC", chemical: "epclen TL3 NaOH", timeMin: 5, temp: "", robot: 1 },
+
+  { originalTank: 10, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
+
+  { originalTank: 11, process: "Ultra sonic rinse", chemical: "Water", timeMin: 5, temp: "", robot: 1 },
+
+  { originalTank: 12, process: "Activate", chemical: "Dry Salt P12", timeMin: 1, temp: "", robot: 1 },
+
+  { originalTank: 13, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: "1 & 2" },
+
+  { originalTank: 14, process: "Semibright Ni", chemical: "SFN 206 A / SFN 206 B / SFNSTEP / Y17", timeMin: 20, temp: "", robot: 2, expandable: true },
+
+  { originalTank: 15, process: "High Sulfur Ni", chemical: "HS 303 / Y17", timeMin: 3, temp: "", robot: 2, expandable: true },
+
+  { originalTank: 16, process: "Bright Ni", chemical: "BNP 415 A / BNP 415 B / Y17", timeMin: 20, temp: "", robot: 2, expandable: true },
+
+  { originalTank: 17, process: "Micro porous Ni", chemical: "MP 506 / MP pores / MP Dispersant / Y17", timeMin: 3, temp: "", robot: 2, expandable: true },
+
+  { originalTank: 18, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+
+  { originalTank: 19, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+
+  { originalTank: 20, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+
+  { originalTank: 21, process: "Chromium", chemical: "Ecoprom 800", timeMin: 5, temp: "", robot: 2 },
+
+  { originalTank: 22, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+
+  { originalTank: 23, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+
+  { originalTank: 24, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+
+  { originalTank: 25, process: "Water Rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+
+  { originalTank: 26, process: "Ultra sonic rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+
+  { originalTank: 27, process: "Hot rinse", chemical: "Water", timeMin: 5, temp: "", robot: 2 },
+
+  { originalTank: 28, process: "Unloading", chemical: "", timeMin: 0, temp: "", robot: 2 }
+];
+
+
+    const expandableSet = new Set([14, 15, 16, 17]);
     let recommendationMap = new Map();
     let stageGroups = [];
     let flowRows = [];
